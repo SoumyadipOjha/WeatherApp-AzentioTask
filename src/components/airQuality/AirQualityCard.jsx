@@ -12,12 +12,12 @@ function AirQualityCard({ airQuality }) {
   }
 
   return (
-    <div className="bg-[#fafafa] dark:bg-gray-800 dark:text-white sm:my-6 md:w-[19rem] w-[22rem] h-52 bg-cover p-4 flex flex-col justify-between rounded-xl shadow-sm relative">
+    <div className="bg-[#fafafa] dark:bg-gray-800 dark:text-white sm:my-4 md:w-[19rem] w-full max-w-sm h-auto p-4 flex flex-col justify-between rounded-xl shadow-sm relative">
       {/* Top Section */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-start flex-wrap gap-2">
         {/* Title */}
         <span className="font-bold text-lg">Air Quality</span>
-        <span className="text-xs text-gray-500 dark:text-gray-400 w-40 absolute top-[3.7rem]">
+        <span className="text-xs text-gray-500 dark:text-gray-400 sm:w-full md:w-40 mt-1">
           Air quality is calculated based on the PM2.5 level
         </span>
 

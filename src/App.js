@@ -6,13 +6,15 @@ import Forecast from "./components/hourlyWeather/Forecast";
 import Astronomy from "./components/astronomy/Astronomy";
 
 function App() {
-  const [initial, setInitial] = useState("Delhi,India");
+  const [initial, setInitial] = useState("Delhi");
   const [location, setLocation] = useState([]);
   const [weatherDesc, setWeatherDesc] = useState([]);
   const [hourly, setHourly] = useState([]);
   const [daily, setDaily] = useState([]);
   const [error, setError] = useState();
   const [searchHistory, setSearchHistory] = useState([]);
+
+  const API_KEY = "6fa1bb35a696e1e25ef20b8a4026fb61"; // Replace with your actual API key
 
   useEffect(() => {
     const savedHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
@@ -26,49 +28,54 @@ function App() {
     const updatedHistory = [
       newSearch,
       ...searchHistory.filter((city) => city !== newSearch),
-    ].slice(0, 5);
+    ].slice(0, 6);
     setSearchHistory(updatedHistory);
     localStorage.setItem("searchHistory", JSON.stringify(updatedHistory));
   };
 
   useEffect(() => {
     fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=aa30bbb34d2948bc8be110949232605&q=${initial}&days=7&aqi=yes&alerts=no`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${initial}&appid=${API_KEY}&units=metric`
     )
       .then((resp) => {
         if (!resp.ok) throw new Error();
-        else if (resp.ok === true) setError("");
+        else setError("");
         return resp.json();
       })
       .then((data) => {
         console.log(data);
-        setLocation([data.location.name, data.location.country]);
+        setLocation([data.city.name, data.city.country]);
+
         setWeatherDesc([
-          data.current.condition.text,
-          data.current.temp_c,
-          data.current.feelslike_c,
-          data.current.humidity,
-          data.current.pressure_mb,
-          data.current.last_updated,
-          data.current.condition.icon,
-          data.current.air_quality.pm2_5,
-          [data.current.wind_kph, data.current.wind_degree, data.current.wind_dir],
+          data.list[0].weather[0].description, // Current weather description
+          data.list[0].main.temp, // Temperature
+          data.list[0].main.feels_like, // Feels like temperature
+          data.list[0].main.humidity, // Humidity
+          data.list[0].main.pressure, // Pressure
+          data.list[0].dt_txt, // Last updated time
+          `http://openweathermap.org/img/wn/${data.list[0].weather[0].icon}.png`, // Weather icon
+          data.list[0].wind.speed, // Wind Speed
+          [data.list[0].wind.deg, data.list[0].wind.speed], // Wind details
         ]);
+
         setHourly(
-          data.forecast.forecastday[0].hour.map((weather) => ({
-            temp: weather.temp_c,
-            day: weather.condition.text,
-            time: weather.time.slice(10),
-            icon: weather.condition.icon,
+          data.list.slice(0, 8).map((weather) => ({
+            temp: weather.main.temp,
+            day: weather.weather[0].description,
+            time: weather.dt_txt.split(" ")[1].slice(0, 5),
+            icon: `http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`,
           }))
         );
+
         setDaily(
-          data.forecast.forecastday.map((weather) => ({
-            temp: weather.day.avgtemp_c,
-            icon: weather.day.condition.icon,
-            date: weather.date,
-            state: weather.day.condition.text,
-          }))
+          data.list
+            .filter((_, index) => index % 8 === 0)
+            .map((weather) => ({
+              temp: weather.main.temp,
+              icon: `http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`,
+              date: weather.dt_txt.split(" ")[0],
+              state: weather.weather[0].description,
+            }))
         );
       })
       .catch((err) => {
@@ -78,10 +85,8 @@ function App() {
   }, [initial]);
 
   return (
-// {/* <div className="w-full h-full bg-white dark:bg-[#0f172a] text-black dark:text-white transition-colors duration-300"> */}
-  
-<main className="fixed top-0 left-0 right-0 max-w-full h-screen flex lg:flex-col max-w-[1250px] lg:w-[90%] mx-auto bg-white dark:bg-[#0f172a] text-black dark:text-white transition-colors duration-300 z-50">
-{/* Left Column */}
+    <main className="fixed top-0 left-0 right-0 max-w-full h-screen flex lg:flex-col max-w-[1250px] lg:w-[90%] mx-auto bg-white dark:bg-[#0f172a] text-black dark:text-white transition-colors duration-300 z-50">
+      {/* Left Column */}
       <section className="ml-[3%] lg:ml-0 w-2/3 lg:w-full">
         <Header searchValue={searchValue} error={error} />
         
@@ -133,7 +138,6 @@ function App() {
         </div>
       </section>
     </main>
-    // </div>
   );
 }
 
