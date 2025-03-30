@@ -1,5 +1,4 @@
-import astronomyChart from "../../assets/astronomyChart.svg";
-import { WiBarometer } from "react-icons/wi";
+
 import { useEffect, useState } from "react";
 import AstroCard from "./AstroCard";
 import DailyWeather from "./DailyWeather";
