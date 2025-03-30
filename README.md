@@ -9,7 +9,7 @@ https://weatherforecaastt.netlify.app
 ![Dark Mode Screenshot](./src/assets/light-mode.png)
 
 ### 🌑 Dark Mode
-![Dark Mode Screenshot](.src/assets/dark-mode.png)
+![Dark Mode Screenshot](./src/assets/dark-mode.png)
 
 ---
 
