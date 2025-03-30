@@ -1,12 +1,15 @@
 # Weather Forecast Application 🌤️🌙
 
+
+##**Live Site :**
+https://weatherforecaastt.netlify.app
 ## **Screenshots**
 
 ### 🌞 Light Mode
-![Light Mode Screenshot](./screenshots/light-mode.png)
+![Light Mode Screenshot](./assets/light-mode.png)
 
 ### 🌑 Dark Mode
-![Dark Mode Screenshot](./screenshots/dark-mode.png)
+![Dark Mode Screenshot](./assests/dark-mode.png)
 
 ---
 
