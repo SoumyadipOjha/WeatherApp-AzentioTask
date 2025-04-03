@@ -36,7 +36,7 @@ function SideBar({ searchValue, error }) {
 
   return (
     <header className="flex items-center bg-[#fafafa] dark:bg-gray-900 p-3 rounded-lg">
-      <div className="flex-auto sm:flex-1">
+      <div className="hidden sm:visible sm:flex-auto sm:flex-1">
         <span className="font-bold text-2xl text-[#5d83ff] dark:text-[#91abff] font-Poppins">
           <a href="/">WEATHER DASHBOARD</a>
         </span>
@@ -53,7 +53,7 @@ function SideBar({ searchValue, error }) {
               {error}
             </span>
           )}
-         <button  className="bg-[#91abff] dark:bg-[#5d83ff] text-white flex items-center justify-center p-2 rounded-full ml-5 mr-10 hover:bg-[#7b9dff] dark:hover:bg-[#4a72ff]"><IoMdSearch className="text-2xl" />
+         <button  className="bg-[#91abff] dark:bg-[#5d83ff] text-white flex items-center justify-center p-2 rounded-full ml-1 mr-1  sm:ml-5 sm:mr-10 hover:bg-[#7b9dff] dark:hover:bg-[#4a72ff]"><IoMdSearch className="text-2xl" />
 </button>
 
 
@@ -65,7 +65,7 @@ function SideBar({ searchValue, error }) {
       {/* Fetch current location button */}
       <button
   onClick={fetchCurrentLocationWeather}
-  className="bg-[#91abff] dark:bg-[#5d83ff] text-white flex items-center justify-center p-2 rounded-full ml-5 mr-10 hover:bg-[#7b9dff] dark:hover:bg-[#4a72ff]"
+  className="bg-[#91abff] dark:bg-[#5d83ff] text-white flex items-center justify-center p-2 rounded-full  ml-1 mr-1  md:ml-5 md:mr-10   hover:bg-[#7b9dff] dark:hover:bg-[#4a72ff]"
 >
   <MdMyLocation className="text-xl" />
 </button>

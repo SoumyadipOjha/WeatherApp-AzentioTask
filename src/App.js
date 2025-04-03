@@ -17,7 +17,8 @@ function App() {
   const API_KEY = "6fa1bb35a696e1e25ef20b8a4026fb61"; // Replace with your actual API key
 
   useEffect(() => {
-    const savedHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    const savedHistory =
+      JSON.parse(localStorage.getItem("searchHistory")) || [];
     setSearchHistory(savedHistory);
   }, []);
 
@@ -80,64 +81,72 @@ function App() {
       })
       .catch((err) => {
         console.error(err);
-        setError("No matching location found. Please, check if spelling is correct!");
+        setError(
+          "No matching location found. Please, check if spelling is correct!"
+        );
       });
   }, [initial]);
 
   return (
-    <main className="fixed top-0 left-0 right-0 max-w-full h-screen flex lg:flex-col max-w-[1250px] lg:w-[90%] mx-auto bg-white dark:bg-[#0f172a] text-black dark:text-white transition-colors duration-300 z-50">
-      {/* Left Column */}
-      <section className="ml-[3%] lg:ml-0 w-2/3 lg:w-full">
-        <Header searchValue={searchValue} error={error} />
-        
-        {/* Search History Section */}
-        <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">History</h3>
-          <ul className="mt-2">
-            {searchHistory.map((city, index) => (
-              <li
-                key={index}
-                className="cursor-pointer hover:text-blue-500 dark:hover:text-blue-300 text-gray-700 dark:text-gray-300"
-                onClick={() => searchValue(city)}
-              >
-                {city}
-              </li>
-            ))}
-          </ul>
-        </div>
+    <body className="dark:bg-[#0f172a] max-w-full bg-white">
+      <main className="max-w-full  flex lg:flex-col max-w-[1250px] lg:w-[90%] mx-auto bg-white dark:bg-[#0f172a] text-black dark:text-white transition-colors duration-300 z-50">
+        {/* Left Column */}
+        <section className="ml-[3%] lg:ml-0 w-2/3 lg:w-full">
+          <Header searchValue={searchValue} error={error} />
 
-        <section className="h-auto flex flex-col mt-8">
-          {/* City Name Text */}
-          <div className="flex flex-col pb-4">
-            <span className="text-2xl font-bold text-gray-800 dark:text-gray-200">
-              {location[0]}
-            </span>
-            <span className="text-base text-gray-600 dark:text-gray-400">{location[1]}</span>
+          {/* Search History Section */}
+          <div className="mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+              History
+            </h3>
+            <ul className="mt-2">
+              {searchHistory.map((city, index) => (
+                <li
+                  key={index}
+                  className="cursor-pointer hover:text-blue-500 dark:hover:text-blue-300 text-gray-700 dark:text-gray-300"
+                  onClick={() => searchValue(city)}
+                >
+                  {city}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Weather Cards */}
-          <div className="flex flex-wrap justify-between sm:justify-center">
-            <WeatherCard location={location} weatherDesc={weatherDesc} />
-            <AirQualityCard airQuality={weatherDesc[7]} />
-          </div>
+          <section className="h-auto flex flex-col mt-8">
+            {/* City Name Text */}
+            <div className="flex flex-col pb-4">
+              <span className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+                {location[0]}
+              </span>
+              <span className="text-base text-gray-600 dark:text-gray-400">
+                {location[1]}
+              </span>
+            </div>
 
-          <Forecast hourlyWeather={hourly} />
+            {/* Weather Cards */}
+            <div className="flex flex-wrap justify-between sm:justify-center">
+              <WeatherCard location={location} weatherDesc={weatherDesc} />
+              <AirQualityCard airQuality={weatherDesc[7]} />
+            </div>
+
+            <Forecast hourlyWeather={hourly} />
+          </section>
         </section>
-      </section>
 
-      {/* Right Sidebar */}
-      <section className="w-1/3 lg:w-full ml-4 lg:ml-0 px-6 lg:px-0 mb-10">
-        <div className="bg-[#fafafa] dark:bg-gray-900 shadow-sm h-full rounded-2xl p-4 pt-6">
-          <Astronomy
-            location={location[0]}
-            time={weatherDesc[5]}
-            city={initial}
-            wind={weatherDesc[8]}
-            dailyWeather={daily}
-          />
-        </div>
-      </section>
-    </main>
+        {/* Right Sidebar */}
+        <section className="w-1/3 lg:w-full ml-4 lg:ml-0 px-6 lg:px-0 mb-10">
+          <div className="bg-[#fafafa] dark:bg-gray-900 shadow-sm h-full rounded-2xl p-4 pt-6">
+            <Astronomy
+              location={location[0]}
+              time={weatherDesc[5]}
+              city={initial}
+              wind={weatherDesc[8]}
+              dailyWeather={daily}
+            />
+          </div>
+        </section>
+      </main>
+    </body>
   );
 }
 

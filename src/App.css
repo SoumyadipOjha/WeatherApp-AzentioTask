@@ -3,24 +3,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* 🛠 Base styles */
+ 
 @layer base {
   body {
-    @apply bg-[#fafafa] text-black transition-colors duration-300;
+    @apply bg-[#fafafa] text-black transition-colors duration-300 font-poppins;
   }
 
-  /* 🌙 Dark Mode */
   .dark {
     @apply bg-[#0f172a] text-white;
   }
 }
 
-/* 🖥 Custom scrollbar styles */
+:root {
+  --primary-bg: #fafafa;
+  --primary-text: #000000;
+  --secondary-bg: #0f172a;
+  --secondary-text: #ffffff;
+  --highlight-bg: #88a4ff;
+}
+
+.dark {
+  --primary-bg: #0f172a;
+  --primary-text: #ffffff;
+  --highlight-bg: #4f46e5;
+}
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 15px;
     height: 15px;
+    transition: width 0.2s ease;
   }
 
   .scrollbar::-webkit-scrollbar-track {
@@ -29,18 +41,19 @@
   }
 
   .dark .scrollbar::-webkit-scrollbar-track {
-    background: #1e293b; 
+    background: #1e293b;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: #88a4ff;
+    background: var(--highlight-bg);
     border-radius: 100vh;
     border: 3px solid #f6f7ed;
+    transition: background-color 0.3s ease;
   }
 
   .dark .scrollbar::-webkit-scrollbar-thumb {
-    background: #4f46e5; /* Dark mode thumb */
-    border: 3px solid #374151; /* Dark mode border */
+    background: #4f46e5;
+    border: 3px solid #374151;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
@@ -48,6 +61,6 @@
   }
 
   .dark .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #4338ca; /* Dark mode hover */
+    background: #4338ca;
   }
-}
+} 
